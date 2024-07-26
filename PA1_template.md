@@ -33,15 +33,15 @@ daily_activity <- summarize(grouped_activity,
 
 
 ``` r
-steps_mean <- mean(daily_activity$mean, na.rm = T)
-steps_median <- median(daily_activity$mean, na.rm = T)
+steps_mean <- mean(daily_activity$total, na.rm = T)
+steps_median <- median(daily_activity$total, na.rm = T)
 
-#steps_mean <- round(steps_mean, digits = 3) 
-#steps_median <- round(steps_median, digits = 3) 
+steps_mean <- round(steps_mean, digits = 3) 
+steps_median <- round(steps_median, digits = 3) 
 ```
-The mean number of steps taken is  37.3825996
+The mean number of steps taken is  9354.23
 
-The median number of steps taken is 37.3784722
+The median number of steps taken is 1.0395\times 10^{4}
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
@@ -102,12 +102,15 @@ daily_activity <- summarize(grouped_activity,
 
 
 ``` r
-steps_mean <- mean(daily_activity$mean, na.rm = T)
-steps_median <- median(daily_activity$mean, na.rm = T)
-```
-The mean number of steps taken is  37.3825996
+steps_mean <- mean(daily_activity$total, na.rm = T)
+steps_median <- median(daily_activity$total, na.rm = T)
 
-The median number of steps taken is 37.3825996
+steps_mean <- round(steps_mean, digits = 3) 
+steps_median <- round(steps_median, digits = 3) 
+```
+The mean number of steps taken is  1.0766189\times 10^{4}
+
+The median number of steps taken is 1.0766189\times 10^{4}
 
 ![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 

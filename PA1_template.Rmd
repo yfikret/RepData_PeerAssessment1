@@ -33,18 +33,18 @@ daily_activity <- summarize(grouped_activity,
 ```
 
 ```{r}
-steps_mean <- mean(daily_activity$mean, na.rm = T)
-steps_median <- median(daily_activity$mean, na.rm = T)
+steps_mean <- mean(daily_activity$total, na.rm = T)
+steps_median <- median(daily_activity$total, na.rm = T)
 
-#steps_mean <- round(steps_mean, digits = 3) 
-#steps_median <- round(steps_median, digits = 3) 
+steps_mean <- round(steps_mean, digits = 3) 
+steps_median <- round(steps_median, digits = 3) 
 ```
 The mean number of steps taken is  `r steps_mean`
 
 The median number of steps taken is `r steps_median`
 
 ```{r echo = FALSE}
-hist(daily_activity$mean, main = "Daily steps", xlab = "Total steps per day")
+hist(daily_activity$total, main = "Daily steps", xlab = "Total steps per day")
 ```
 
 
@@ -99,16 +99,18 @@ daily_activity <- summarize(grouped_activity,
 ```
 
 ```{r}
-steps_mean <- mean(daily_activity$mean, na.rm = T)
-steps_median <- median(daily_activity$mean, na.rm = T)
+steps_mean <- mean(daily_activity$total, na.rm = T)
+steps_median <- median(daily_activity$total, na.rm = T)
 
+steps_mean <- round(steps_mean, digits = 3) 
+steps_median <- round(steps_median, digits = 3) 
 ```
 The mean number of steps taken is  `r steps_mean`
 
 The median number of steps taken is `r steps_median`
 
 ```{r echo = FALSE}
-hist(daily_activity$mean, main = "Daily steps", xlab = "Total steps per day")
+hist(daily_activity$total, main = "Daily steps", xlab = "Total steps per day")
 ```
 
 
