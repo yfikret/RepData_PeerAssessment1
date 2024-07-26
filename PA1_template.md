@@ -117,3 +117,41 @@ The median number of steps taken is 37.3825996
 
 
 
+``` r
+activity$date <- as.Date(activity$date)
+
+activity_weekdays <- weekdays(activity$date)
+weekday_factor <- as.factor(ifelse(activity_weekdays %in% c("Saturday", "Sunday"), "weekend", "weekday"))
+
+activity$weekday <- weekday_factor
+
+weekend_activity <- activity[activity$weekday == "weekend",]
+
+weekday_activity <- activity[activity$weekday == "weekday",]
+
+#mean(weekday_activity$steps)
+#mean(weekend_activity$steps)
+
+grouped_weekend_activity <- group_by(weekend_activity, interval) 
+averaged_weekend_activity <- summarize(grouped_weekend_activity, 
+                                      interval_mean = mean(steps, na.rm = TRUE),
+                                      weekday = "weekend")
+
+grouped_weekday_activity <- group_by(weekday_activity, interval) 
+averaged_weekday_activity <- summarize(grouped_weekday_activity, 
+                                      interval_mean = mean(steps, na.rm = TRUE),
+                                       weekday = "weekday")
+
+averaged_data <- bind_rows(averaged_weekend_activity, averaged_weekday_activity)
+averaged_data$weekday <- as.factor(averaged_data$weekday)
+library(lattice)
+xyplot(interval_mean ~ interval | weekday, data = averaged_data, type="l", layout = c(1, 2), xlab = "Interval", ylab = "Steps", main = "Weekend vs Weekday Activity")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
+On average, the weekend activity is higher, but weekday activity has a higher spike earlier in the day.
+
+## Notes
+
+
