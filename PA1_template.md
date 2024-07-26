@@ -8,7 +8,8 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r cache = TRUE}
+
+``` r
 unzip("activity.zip")
 activity <- read.csv("activity.csv")
 ```
@@ -17,12 +18,10 @@ activity <- read.csv("activity.csv")
 ## What is mean total number of steps taken per day?
 
 
-```{r eval = FALSE, echo = FALSE}
-library(plyr)
-ddply(activity, .(date), summarize, mean = round(mean(steps, na.rm = T), 2),total = sum(steps, na.rm = T))
-```
 
-```{r message=FALSE, warning=FALSE}
+
+
+``` r
 library(dplyr)
 
 grouped_activity <- group_by(activity, date) 
@@ -32,20 +31,19 @@ daily_activity <- summarize(grouped_activity,
           )
 ```
 
-```{r}
+
+``` r
 steps_mean <- mean(daily_activity$mean, na.rm = T)
 steps_median <- median(daily_activity$mean, na.rm = T)
 
 #steps_mean <- round(steps_mean, digits = 3) 
 #steps_median <- round(steps_median, digits = 3) 
 ```
-The mean number of steps taken is  `r steps_mean`
+The mean number of steps taken is  37.3825996
 
-The median number of steps taken is `r steps_median`
+The median number of steps taken is 37.3784722
 
-```{r echo = FALSE}
-hist(daily_activity$mean, main = "Daily steps", xlab = "Total steps per day")
-```
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
 ## What is the average daily activity pattern?
