@@ -49,6 +49,21 @@ hist(daily_activity$mean, main = "Daily steps", xlab = "Total steps per day")
 
 
 ## What is the average daily activity pattern?
+```{r}
+grouped_activity <- group_by(activity, interval) 
+interval_activity <- summarize(grouped_activity, 
+          interval_mean = mean(steps, na.rm = TRUE) )
+
+with(interval_activity, plot(interval, interval_mean, type = "l",
+                    main = "Interval steps taken", 
+                    xlab = "5 minute interval index", ylab = "Average steps") )
+```
+
+```{r}
+max_interval <- interval_activity$interval[which.max(interval_activity$interval_mean)]
+```
+
+The interval that has the highest number of steps on average is interval `r max_interval`
 
 
 
@@ -57,3 +72,18 @@ hist(daily_activity$mean, main = "Daily steps", xlab = "Total steps per day")
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+
+```{r eval=F, echo=F}
+
+daily_means <- lapply(activity$date, function(elt) {daily_activity$mean[which(elt == daily_activity$date, arr.ind = T)]})
+
+activity <- mutate(activity, 
+                  daily_mean = daily_means)
+
+with(activity, plot(interval, daily_mean, 
+                    main = "Interval steps taken", 
+                    xlab = "5 minute interval index", ylab = "Average daily steps") 
+)
+```
