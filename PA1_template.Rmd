@@ -68,7 +68,48 @@ The interval that has the highest number of steps on average is interval `r max_
 
 
 ## Imputing missing values
+```{r}
+total_nas <- sum(is.na(activity$steps))
+```
 
+The total NA values are `r total_nas`
+
+Imputing using the average for that interval across all days
+```{r}
+
+for(index in seq_along(activity$steps)) {
+  if (is.na(activity$steps[index]) ) {
+    interval_mean_index <- which(activity$interval[index] == interval_activity$interval)
+    interval_mean <- interval_activity$interval_mean[interval_mean_index]
+    activity$steps[index] = interval_mean
+  }
+ 
+}
+
+```
+
+
+```{r }
+
+grouped_activity <- group_by(activity, date) 
+daily_activity <- summarize(grouped_activity, 
+          mean = mean(steps, na.rm = TRUE), 
+          total = sum(steps, na.rm = T) 
+          )
+```
+
+```{r}
+steps_mean <- mean(daily_activity$mean, na.rm = T)
+steps_median <- median(daily_activity$mean, na.rm = T)
+
+```
+The mean number of steps taken is  `r steps_mean`
+
+The median number of steps taken is `r steps_median`
+
+```{r echo = FALSE}
+hist(daily_activity$mean, main = "Daily steps", xlab = "Total steps per day")
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?

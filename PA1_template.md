@@ -69,25 +69,51 @@ The interval that has the highest number of steps on average is interval 835
 
 
 
-
 ## Imputing missing values
 
+``` r
+total_nas <- sum(is.na(activity$steps))
+```
 
+The total NA values are 2304
 
-## Are there differences in activity patterns between weekdays and weekends?
+Imputing using the average for that interval across all days
 
-## Notes
+``` r
+for(index in seq_along(activity$steps)) {
+  if (is.na(activity$steps[index]) ) {
+    interval_mean_index <- which(activity$interval[index] == interval_activity$interval)
+    interval_mean <- interval_activity$interval_mean[interval_mean_index]
+    activity$steps[index] = interval_mean
+  }
+ 
+}
+```
 
 
 
 ``` r
-daily_means <- lapply(activity$date, function(elt) {daily_activity$mean[which(elt == daily_activity$date, arr.ind = T)]})
-
-activity <- mutate(activity, 
-                  daily_mean = daily_means)
-
-with(activity, plot(interval, daily_mean, 
-                    main = "Interval steps taken", 
-                    xlab = "5 minute interval index", ylab = "Average daily steps") 
-)
+grouped_activity <- group_by(activity, date) 
+daily_activity <- summarize(grouped_activity, 
+          mean = mean(steps, na.rm = TRUE), 
+          total = sum(steps, na.rm = T) 
+          )
 ```
+
+
+``` r
+steps_mean <- mean(daily_activity$mean, na.rm = T)
+steps_median <- median(daily_activity$mean, na.rm = T)
+```
+The mean number of steps taken is  37.3825996
+
+The median number of steps taken is 37.3825996
+
+![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+
+
+## Are there differences in activity patterns between weekdays and weekends?
+
+
+
+
